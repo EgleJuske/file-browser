@@ -38,17 +38,30 @@
                 if (is_dir($dir . '/' . $dirResult)) {
                     $type = 'Directory';
                     $name = '<a href="?path=' . $path . '/' . $dirResult . '">' . $dirResult . '</a>';
+                    $button = '';
                 } else {
                     $type = 'File';
                     $name = $dirResult;
+                    $button = '<button>Delete</button></td>';
                 }
                 print('<tr><td>' . $type . '</td>');
                 print('<td>' . $name . '</td>');
-                print('<td>buttons</td></tr>');
+                print('<td>' . $button . '</tr>');
             }
             ?>
         </tbody>
     </table>
+    <div class="back-button-placeholder">
+        <button>Back - history</button>
+        <button>Back - up folder</button>
+    </div>
+
+    <div class="new-dir-placeholder">
+        <form action="" method="GET">
+            <input type="text" name="new-dir-name" id="new-dir-name" placeholder="New directory name">
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 </body>
 
 </html>
