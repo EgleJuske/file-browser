@@ -14,7 +14,8 @@
 
     <div>You are currently in this category:
         <?php
-        print('<span class="current-dir-name">' . $_SERVER['REQUEST_URI'] . '</span>')
+        $currentDir =  $_SERVER['REQUEST_URI'];
+        print('<span class="current-dir-name">' . $currentDir . '</span>');
         ?>
     </div>
     <table>
@@ -27,26 +28,35 @@
         </thead>
         <tbody>
             <?php
-            $path = $_GET['path'];
-            if (isset($path)) {
-                $dir = '.' . $path;
-            } else {
-                $dir = '.';
+            if (isset($_POST['delete'])) {
+                unlink($_GET['path'] . $_POST['delete']);
+                header('Location: ' . $currentDir);
             }
-            $dirResults = array_diff(scandir($dir, $sorting_order = SCANDIR_SORT_NONE), array('..', '.'));
+            $path = './' . $_GET['path'];
+
+            $dirResults = array_diff(scandir($path), array('..', '.'));
             foreach ($dirResults as $dirResult) {
-                if (is_dir($dir . '/' . $dirResult)) {
+                if (is_dir($path . '/' . $dirResult)) {
                     $type = 'Directory';
-                    $name = '<a href="?path=' . $path . '/' . $dirResult . '">' . $dirResult . '</a>';
-                    $button = '';
+                    if (!isset($_GET['path'])) {
+                        $name = '<a href="' . $currentDir . '?path=' . $dirResult . '/">' . $dirResult . '</a>';
+                    } else {
+                        $name = '<a href="' . $currentDir . $dirResult . '/">' . $dirResult . '</a>';
+                    }
+                    $buttons = '';
                 } else {
                     $type = 'File';
                     $name = $dirResult;
-                    $button = '<button>Delete</button></td>';
+                    $buttons = '<form action="" method="POST">
+                                    <button type="submit" name="delete" value="' . $dirResult . '">Delete</button>
+                                </form>
+                                <form action="" method="POST">
+                                    <button type="submit" name="download" value="' . $dirResult . '">Download</button>
+                                </form>';
                 }
                 print('<tr><td>' . $type . '</td>');
                 print('<td>' . $name . '</td>');
-                print('<td>' . $button . '</tr>');
+                print('<td>' . $buttons . '</td></tr>');
             }
             ?>
         </tbody>
@@ -61,6 +71,26 @@
             <input type="text" name="new-dir-name" id="new-dir-name" placeholder="New directory name">
             <input type="submit" value="Submit">
         </form>
+    </div>
+
+    <div>
+        all the variables <br>
+        <?php
+
+        print('$currentDir = ' . $currentDir);
+        print('<br><br>');
+        print('$path= ' . $path);
+        print('<br><br>');
+        print('$dirResults = ');
+        foreach ($dirResults as $dirResult) {
+            print($dirResult . ' -- ');
+        }
+        print('<br><br>');
+        print('$_GET[\'delete\']) = ' . $_GET['delete']);
+        print('<br><br>');
+        print('<br><br>');
+
+        ?>
     </div>
 </body>
 
