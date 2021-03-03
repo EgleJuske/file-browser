@@ -86,8 +86,9 @@
             print($dirResult . ' -- ');
         }
         print('<br><br>');
-        print('$_GET[\'delete\']) = ' . $_GET['delete']);
+        print('$_POST[\'delete\']) = ' . $_POST['delete']);
         print('<br><br>');
+        var_dump($_POST['delete']);
         print('<br><br>');
 
         ?>

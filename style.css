@@ -33,7 +33,17 @@ th {
 }
 
 tbody td {
-	padding: 5px 2px;
+	padding: 5px 0px;
 	background-color: lightgrey;
 	border: 1px solid white;
+	width: 33%;
+}
+
+td form {
+	float: left;
+	margin-right: 10px;
+}
+
+button {
+	padding: 5px 10px;
 }
