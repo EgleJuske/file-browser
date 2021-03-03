@@ -1,12 +1,11 @@
 <?php
-if (isset($_FILES['file'])) {
-    $file_name = $_FILES['file']['name'];
-    $file_size = $_FILES['file']['size'];
-    $file_tmp = $_FILES['file']['tmp_name'];
-    $file_type = $_FILES['file']['type'];
-    move_uploaded_file($file_tmp, $_GET['path'] . $file_name);
-    print('<div style="color: green; font-weight: bold;">File ' . $file_name . ' uploaded</div>');
-    header('Location: ' . $currentDir);
+
+if (isset($_POST['new-dir-name'])) {
+    if (is_dir($_POST['new-dir-name'])) {
+        print('<div style="color: red;">The directory with name <i><b>' . $_POST['new-dir-name'] . '</b></i> already exists</div>');
+    } else {
+        mkdir($_GET['path'] . $_POST['new-dir-name']);
+    }
 }
 
 if (isset($_POST['download'])) {
@@ -27,6 +26,15 @@ if (isset($_POST['download'])) {
     exit;
 }
 
+if (isset($_FILES['file'])) {
+    $file_name = $_FILES['file']['name'];
+    $file_size = $_FILES['file']['size'];
+    $file_tmp = $_FILES['file']['tmp_name'];
+    $file_type = $_FILES['file']['type'];
+    move_uploaded_file($file_tmp, $_GET['path'] . $file_name);
+    print('<div style="color: green;">File <i><b>' . $file_name . '</b></i> uploaded</div>');
+    header('Location: ' . $currentDir);
+}
 ?>
 
 <!DOCTYPE html>
@@ -98,8 +106,8 @@ if (isset($_POST['download'])) {
     </div>
 
     <div class="new-dir-placeholder">
-        <form action="" method="GET">
-            <input type="text" name="new-dir-name" id="new-dir-name" placeholder="New directory name">
+        <form action="" method="POST">
+            <input type="text" name="new-dir-name" placeholder="New directory name">
             <input type="submit" value="Submit">
         </form>
     </div>
