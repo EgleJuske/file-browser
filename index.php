@@ -119,7 +119,7 @@ if (isset($_FILES['file'])) {
         </form>
     </div>
 
-    <div>
+    <!-- <div>
         all the variables <br>
         <?php
 
@@ -138,7 +138,7 @@ if (isset($_FILES['file'])) {
         print('<br><br>');
 
         ?>
-    </div>
+    </div> -->
 </body>
 
 </html>
