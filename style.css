@@ -44,6 +44,17 @@ td form {
 	margin-right: 10px;
 }
 
-button {
+button,
+.new-dir-placeholder input {
 	padding: 5px 10px;
+	cursor: pointer;
+}
+
+input[type="text"] {
+	cursor: text;
+}
+
+input[name="upload"] {
+	padding: 0px 10px;
+	font-size: 14px;
 }

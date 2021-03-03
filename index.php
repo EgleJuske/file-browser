@@ -1,3 +1,15 @@
+<?php
+if (isset($_FILES['file'])) {
+    $file_name = $_FILES['file']['name'];
+    $file_size = $_FILES['file']['size'];
+    $file_tmp = $_FILES['file']['tmp_name'];
+    $file_type = $_FILES['file']['type'];
+    move_uploaded_file($file_tmp, $_GET['path'] . $file_name);
+    print('<div style="color: green; font-weight: bold;">File ' . $file_name . ' uploaded</div>');
+    header('Location: ' . $currentDir);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -70,6 +82,13 @@
         <form action="" method="GET">
             <input type="text" name="new-dir-name" id="new-dir-name" placeholder="New directory name">
             <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <div class="upload-download-placeholder">
+        <form action="" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <input type="submit" name="upload" value="Upload file">
         </form>
     </div>
 
