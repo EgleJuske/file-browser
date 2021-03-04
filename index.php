@@ -7,7 +7,7 @@ if (isset($_GET['action']) and $_GET['action'] == 'logout') {
     unset($_SESSION['password']);
     unset($_SESSION['logged_in']);
     $_SESSION['logout_msg'] = '<div style="color:orange">Successfully logged out</div>';
-    header('Location: http://localhost/file-browser/');
+    header('Location: index.php');
     exit;
 }
 
@@ -17,7 +17,7 @@ if (isset($_POST['login']) && !empty($_POST['username']) && !empty($_POST['passw
         $_SESSION['logged_in'] = true;
         $_SESSION['timeout'] = time();
         $_SESSION['username'] = 'Gurgutis';
-        header('Location: http://localhost/file-browser/');
+        header('Location: index.php');
     } else {
         print('<div style="color:red">Wrong username or password</div>');
     }
