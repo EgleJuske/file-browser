@@ -71,3 +71,18 @@ input[name="upload"] {
 	background-color: grey;
 	cursor: not-allowed;
 }
+
+.login-form-placeholder {
+	width: 200px;
+	margin: 5% 5%;
+}
+
+.login-form-placeholder input {
+	line-height: 20px;
+	margin-bottom: 20px;
+	width: 100%;
+}
+
+.login-btn {
+	width: 100%;
+}

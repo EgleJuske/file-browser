@@ -1,4 +1,7 @@
 <?php
+$pathArray = explode('\\', getcwd());
+$lastPathElement = end($pathArray);
+
 // ****lOGOUT***** 
 session_start();
 if (isset($_GET['action']) and $_GET['action'] == 'logout') {
@@ -7,7 +10,7 @@ if (isset($_GET['action']) and $_GET['action'] == 'logout') {
     unset($_SESSION['password']);
     unset($_SESSION['logged_in']);
     $_SESSION['logout_msg'] = '<div style="color:orange">Successfully logged out</div>';
-    header('Location: index.php');
+    header('Location: /' . $lastPathElement . '/');
     exit;
 }
 
@@ -17,15 +20,10 @@ if (isset($_POST['login']) && !empty($_POST['username']) && !empty($_POST['passw
         $_SESSION['logged_in'] = true;
         $_SESSION['timeout'] = time();
         $_SESSION['username'] = 'Gurgutis';
-        header('Location: index.php');
+        header('Location: /' . $lastPathElement . '/');
     } else {
         print('<div style="color:red">Wrong username or password</div>');
     }
-}
-
-if (isset($_SESSION['logout_msg'])) {
-    print($_SESSION['logout_msg']);
-    unset($_SESSION['logout_msg']);
 }
 
 // ***NEW DIR***
@@ -68,11 +66,10 @@ if (isset($_FILES['file'])) {
         move_uploaded_file($file_tmp, $_GET['path'] . $file_name);
     }
 }
-
 // ***DELETE***
 if (isset($_POST['delete'])) {
     unlink($_GET['path'] . $_POST['delete']);
-    header('Location: ' . $currentDir);
+    header('Location: ' . $_SERVER['REQUEST_URI']);
 }
 ?>
 
@@ -91,14 +88,14 @@ if (isset($_POST['delete'])) {
     <?php
     if ($_SESSION['logged_in'] === true) {
     ?>
-        <h1>This is a very cool file browser</h1>
+        <h1>This is a very nice file browser</h1>
 
         <div>You are currently in this category:
             <?php
-            $currentDir =  $_SERVER['REQUEST_URI'];
-            print('<span class="current-dir-name">' . $currentDir . '</span>');
+            print('<span style="font-weight: bold">' . $_SERVER['REQUEST_URI'] . '</span>');
             ?>
         </div>
+
         <table>
             <thead>
                 <tr>
@@ -110,14 +107,18 @@ if (isset($_POST['delete'])) {
             <tbody>
                 <?php
                 $path = './' . $_GET['path'];
-                $dirResults = array_diff(scandir($path), array('..', '.'));
+                print($_SERVER['REQUEST_URI']);
+                print('<br>');
+                print($path);
+                $dirResults = scandir($path);
                 foreach ($dirResults as $dirResult) {
-                    if (is_dir($path . '/' . $dirResult)) {
+                    if ($dirResult === '.' || $dirResult === '..') continue;
+                    if (is_dir($path . $dirResult)) {
                         $type = 'Directory';
-                        if (!isset($_GET['path'])) {
-                            $name = '<a href="' . $currentDir . '?path=' . $dirResult . '/">' . $dirResult . '</a>';
+                        if (isset($_GET['path'])) {
+                            $name = '<a href="' . $_SERVER['REQUEST_URI'] . $dirResult . '/">' . $dirResult . '</a>';
                         } else {
-                            $name = '<a href="' . $currentDir . $dirResult . '/">' . $dirResult . '</a>';
+                            $name = '<a href="' . $_SERVER['REQUEST_URI'] . '?path=' . $dirResult . '/">' . $dirResult . '</a>';
                         }
                         $buttons = '';
                     } else {
@@ -146,7 +147,7 @@ if (isset($_POST['delete'])) {
         <?php
         } else { ?>
             <div class="back-btn active">
-                <a href="<?php print(dirname($currentDir, 1)); ?>">Back</a>
+                <a href="<?php print(dirname($_SERVER['REQUEST_URI'], 1)); ?>">Back</a>
             </div>
         <?php } ?>
 
@@ -171,10 +172,9 @@ if (isset($_POST['delete'])) {
     <?php } else { ?>
         <div class="login-form-placeholder">
             <form action="" method="post">
-                <h4><?php echo $msg; ?></h4>
                 <input type="text" name="username" placeholder="username = Gurgutis" required autofocus></br>
                 <input type="password" name="password" placeholder="password = 1234" required>
-                <button class="btn btn-lg btn-primary btn-block" type="submit" name="login">Login</button>
+                <button class="login-btn" type="submit" name="login">Login</button>
             </form>
         </div>
     <?php } ?>
