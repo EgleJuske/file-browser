@@ -58,3 +58,16 @@ input[name="upload"] {
 	padding: 0px 10px;
 	font-size: 14px;
 }
+
+.back-btn a {
+	text-decoration: none;
+	color: white;
+	padding: 5px 20px;
+	background-color: black;
+	border-radius: 5px;
+}
+
+.back-btn.inactive a {
+	background-color: grey;
+	cursor: not-allowed;
+}
