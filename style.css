@@ -15,26 +15,21 @@ table {
 	margin-left: 5%;
 }
 
-.current-dir-name {
-	margin-left: 10px;
-	font-weight: bold;
-}
-
 table {
 	width: 90%;
 	border-spacing: 0px;
 }
 
 th {
-	background-color: green;
+	background-color: rgb(0, 151, 131);
 	color: white;
 	padding: 5px 0px;
 	border: 1px solid white;
 }
 
 tbody td {
-	padding: 5px 0px;
-	background-color: lightgrey;
+	padding: 5px 5px;
+	background-color: rgb(209, 226, 224);
 	border: 1px solid white;
 	width: 33%;
 }
@@ -44,32 +39,92 @@ td form {
 	margin-right: 10px;
 }
 
-button,
 .new-dir-placeholder input {
+	margin-top: 20px;
 	padding: 5px 10px;
+	margin-bottom: 20px;
 	cursor: pointer;
+}
+
+.upload-download-placeholder form {
+	width: 200px;
+	margin-top: 20px;
 }
 
 input[type="text"] {
 	cursor: text;
 }
 
-input[name="upload"] {
-	padding: 0px 10px;
+input[type="file"] {
+	cursor: pointer;
+	margin-bottom: 10px;
+}
+
+.btn,
+.upload-file-btn {
+	border: none;
+	color: white;
+	padding: 5px 20px;
+	background-color: rgb(23, 129, 129);
+	border-radius: 5px;
+	cursor: pointer;
 	font-size: 14px;
+	width: 100%;
+}
+
+.btn:hover,
+.upload-file-btn:hover {
+	background-color: rgb(22, 141, 141);
+	box-shadow: 0px 0px 2px rgb(173, 173, 173);
+}
+
+.btn-delete {
+	border: none;
+	color: white;
+	padding: 5px 20px;
+	background-color: rgb(182, 35, 67);
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 14px;
+	width: 100%;
+}
+
+.btn-delete:hover {
+	background-color: rgb(202, 58, 89);
+	box-shadow: 0px 0px 2px rgb(173, 173, 173);
 }
 
 .back-btn a {
 	text-decoration: none;
 	color: white;
+	background-color: rgb(0, 151, 131);
 	padding: 5px 20px;
-	background-color: black;
-	border-radius: 5px;
+	border-radius: 20px;
+	font-size: 18px;
+}
+
+.back-btn a:hover {
+	background-color: rgb(14, 170, 149);
+	box-shadow: 0px 0px 2px rgb(173, 173, 173);
+	color: white;
 }
 
 .back-btn.inactive a {
-	background-color: grey;
 	cursor: not-allowed;
+	background-color: rgb(146, 151, 151);
+}
+
+.logout-placeholder {
+	margin-top: 40px;
+}
+
+.btn-logout {
+	color: rgb(182, 35, 67);
+}
+
+.btn-logout:hover {
+	font-weight: bold;
+}
 }
 
 .login-form-placeholder {

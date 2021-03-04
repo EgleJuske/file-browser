@@ -9,7 +9,6 @@ if (isset($_GET['action']) and $_GET['action'] == 'logout') {
     unset($_SESSION['username']);
     unset($_SESSION['password']);
     unset($_SESSION['logged_in']);
-    $_SESSION['logout_msg'] = '<div style="color:orange">Successfully logged out</div>';
     header('Location: /' . $lastPathElement . '/');
     exit;
 }
@@ -110,7 +109,7 @@ if (isset($_POST['delete'])) {
                 $dirResults = scandir($path);
                 foreach ($dirResults as $dirResult) {
                     if ($dirResult === '.' || $dirResult === '..') continue;
-                    if (is_dir($path . $dirResult)) {
+                    if (is_dir($path . '/' . $dirResult)) {
                         $type = 'Directory';
                         if (isset($_GET['path'])) {
                             $name = '<a href="' . $_SERVER['REQUEST_URI'] . $dirResult . '/">' . $dirResult . '</a>';
@@ -122,10 +121,10 @@ if (isset($_POST['delete'])) {
                         $type = 'File';
                         $name = $dirResult;
                         $buttons = '<form action="" method="POST">
-                                    <button type="submit" name="delete" value="' . $dirResult . '">Delete</button>
+                                    <button type="submit" class="btn-delete" name="delete" value="' . $dirResult . '">Delete</button>
                                 </form>
                                 <form action="" method="POST">
-                                    <button type="submit" name="download" value="' . $dirResult . '">Download</button>
+                                    <button type="submit" class="btn" name="download" value="' . $dirResult . '">Download</button>
                                 </form>';
                     }
                     print('<tr><td>' . $type . '</td>');
@@ -139,12 +138,12 @@ if (isset($_POST['delete'])) {
         if (!isset($_GET['path'])) {
         ?>
             <div class="back-btn inactive">
-                <a href="" onclick="return false">Back</a>
+                <a href="" onclick="return false">&#10554; Back</a>
             </div>
         <?php
         } else { ?>
             <div class="back-btn active">
-                <a href="<?php print(dirname($_SERVER['REQUEST_URI'], 1)); ?>">Back</a>
+                <a href="<?php print(dirname($_SERVER['REQUEST_URI'], 1)); ?>">&#10554; Back</a>
             </div>
         <?php } ?>
 
@@ -157,13 +156,13 @@ if (isset($_POST['delete'])) {
 
         <div class="upload-download-placeholder">
             <form action="" method="POST" enctype="multipart/form-data">
-                <input type="file" name="file">
-                <input type="submit" name="upload" value="Upload file">
+                <input type="file" id="file" name="file">
+                <input type="submit" class="upload-file-btn" name="upload" value="Upload file">
             </form>
         </div>
 
-        <div>
-            Click here to <a href="index.php?action=logout"> logout. </a>
+        <div class="logout-placeholder">
+            Click here to <a class="btn-logout" href="index.php?action=logout"> logout </a>
         </div>
 
     <?php } else { ?>
@@ -171,7 +170,7 @@ if (isset($_POST['delete'])) {
             <form action="" method="post">
                 <input type="text" name="username" placeholder="username = Gurgutis" required autofocus></br>
                 <input type="password" name="password" placeholder="password = 1234" required>
-                <button class="login-btn" type="submit" name="login">Login</button>
+                <button class="btn" type="submit" name="login">Login</button>
             </form>
         </div>
     <?php } ?>
