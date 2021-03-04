@@ -107,9 +107,6 @@ if (isset($_POST['delete'])) {
             <tbody>
                 <?php
                 $path = './' . $_GET['path'];
-                print($_SERVER['REQUEST_URI']);
-                print('<br>');
-                print($path);
                 $dirResults = scandir($path);
                 foreach ($dirResults as $dirResult) {
                     if ($dirResult === '.' || $dirResult === '..') continue;
