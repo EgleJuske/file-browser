@@ -9,7 +9,7 @@ if (isset($_POST['new-dir-name'])) {
 }
 
 if (isset($_POST['download'])) {
-    $file = './' . $_POST['download'];
+    $file = $_GET['path'] . $_POST['download'];
     $fileToDownloadEscaped = str_replace("&nbsp;", " ", htmlentities($file, null, 'utf-8'));
     ob_clean();
     ob_start();
@@ -27,13 +27,18 @@ if (isset($_POST['download'])) {
 }
 
 if (isset($_FILES['file'])) {
-    $file_name = $_FILES['file']['name'];
-    $file_size = $_FILES['file']['size'];
-    $file_tmp = $_FILES['file']['tmp_name'];
-    $file_type = $_FILES['file']['type'];
-    move_uploaded_file($file_tmp, $_GET['path'] . $file_name);
-    print('<div style="color: green;">File <i><b>' . $file_name . '</b></i> uploaded</div>');
-    header('Location: ' . $currentDir);
+    if ($_FILES['file']['name'] === "") {
+        print('<div style="color: red;">No file selected to upload</div>');
+    } else {
+        $file_name = $_FILES['file']['name'];
+        $file_size = $_FILES['file']['size'];
+        $file_tmp = $_FILES['file']['tmp_name'];
+        $file_type = $_FILES['file']['type'];
+        move_uploaded_file($file_tmp, $_GET['path'] . $file_name);
+        print('<div style="color: green;">File <i><b>' . $file_name . '</b></i> uploaded</div>');
+        header('Location: ' . $currentDir);
+        exit;
+    }
 }
 ?>
 
@@ -119,7 +124,7 @@ if (isset($_FILES['file'])) {
         </form>
     </div>
 
-    <!-- <div>
+    <div>
         all the variables <br>
         <?php
 
@@ -136,9 +141,11 @@ if (isset($_FILES['file'])) {
         print('<br><br>');
         var_dump($_POST['delete']);
         print('<br><br>');
+        print($_FILES['file']['name']);
+        print('<br><br>');
 
         ?>
-    </div> -->
+    </div>
 </body>
 
 </html>
