@@ -1,8 +1,9 @@
 <?php
+// this part extracts the folder name that the program is working in
 $pathArray = explode('\\', getcwd());
 $lastPathElement = end($pathArray);
 
-// ****lOGOUT***** 
+// Logout logic
 session_start();
 if (isset($_GET['action']) and $_GET['action'] == 'logout') {
     session_start();
@@ -13,7 +14,7 @@ if (isset($_GET['action']) and $_GET['action'] == 'logout') {
     exit;
 }
 
-// ****LOGIN***
+// Login logic
 if (isset($_POST['login']) && !empty($_POST['username']) && !empty($_POST['password'])) {
     if ($_POST['username'] == 'Gurgutis' && $_POST['password'] == '1234') {
         $_SESSION['logged_in'] = true;
@@ -25,7 +26,7 @@ if (isset($_POST['login']) && !empty($_POST['username']) && !empty($_POST['passw
     }
 }
 
-// ***NEW DIR***
+// Create new dir logic
 if (isset($_POST['new-dir-name'])) {
     if (is_dir($_POST['new-dir-name'])) {
         print('<div style="color: red;">The directory with name <i><b>' . $_POST['new-dir-name'] . '</b></i> already exists</div>');
@@ -34,7 +35,7 @@ if (isset($_POST['new-dir-name'])) {
     }
 }
 
-// ***DOWNLOAD***
+// Download file logic
 if (isset($_POST['download'])) {
     $file = $_GET['path'] . $_POST['download'];
     $fileToDownloadEscaped = str_replace("&nbsp;", " ", htmlentities($file, null, 'utf-8'));
@@ -53,7 +54,7 @@ if (isset($_POST['download'])) {
     exit;
 }
 
-// ***UPLOAD***
+// Upload file logic
 if (isset($_FILES['file'])) {
     if ($_FILES['file']['name'] === "") {
         print('<div style="color: red;">No file selected to upload</div>');
@@ -65,7 +66,7 @@ if (isset($_FILES['file'])) {
         move_uploaded_file($file_tmp, $_GET['path'] . $file_name);
     }
 }
-// ***DELETE***
+// Delete file logic
 if (isset($_POST['delete'])) {
     unlink($_GET['path'] . $_POST['delete']);
     header('Location: ' . $_SERVER['REQUEST_URI']);
@@ -84,6 +85,8 @@ if (isset($_POST['delete'])) {
 </head>
 
 <body>
+
+    <!-- Header section -->
     <?php
     if ($_SESSION['logged_in'] === true) {
     ?>
@@ -95,6 +98,7 @@ if (isset($_POST['delete'])) {
             ?>
         </div>
 
+        <!-- File browser table section-->
         <table>
             <thead>
                 <tr>
@@ -134,6 +138,8 @@ if (isset($_POST['delete'])) {
                 ?>
             </tbody>
         </table>
+
+        <!-- Back button section-->
         <?php
         if (!isset($_GET['path'])) {
         ?>
@@ -147,6 +153,7 @@ if (isset($_POST['delete'])) {
             </div>
         <?php } ?>
 
+        <!-- Create new dir section-->
         <div class="new-dir-placeholder">
             <form action="" method="POST">
                 <input type="text" name="new-dir-name" placeholder="New directory name">
@@ -154,6 +161,7 @@ if (isset($_POST['delete'])) {
             </form>
         </div>
 
+        <!-- Upload new file section-->
         <div class="upload-download-placeholder">
             <form action="" method="POST" enctype="multipart/form-data">
                 <input type="file" id="file" name="file">
@@ -161,11 +169,14 @@ if (isset($_POST['delete'])) {
             </form>
         </div>
 
+        <!-- Logout section -->
         <div class="logout-placeholder">
             Click here to <a class="btn-logout" href="index.php?action=logout"> logout </a>
         </div>
 
     <?php } else { ?>
+
+        <!-- Login form section -->
         <div class="login-form-placeholder">
             <form action="" method="post">
                 <input type="text" name="username" placeholder="username = Gurgutis" required autofocus></br>

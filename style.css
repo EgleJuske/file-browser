@@ -125,7 +125,6 @@ input[type="file"] {
 .btn-logout:hover {
 	font-weight: bold;
 }
-}
 
 .login-form-placeholder {
 	width: 200px;
@@ -135,9 +134,5 @@ input[type="file"] {
 .login-form-placeholder input {
 	line-height: 20px;
 	margin-bottom: 20px;
-	width: 100%;
-}
-
-.login-btn {
 	width: 100%;
 }
